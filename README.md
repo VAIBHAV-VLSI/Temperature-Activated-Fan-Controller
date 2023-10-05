@@ -17,7 +17,7 @@ The components required for the project are listed below:
 ```
 RISCV  
 Temperature Sensor(DHT11 sensor)
-DC Fan
+DC Fan  
 9 volt battery
 Connecting wires
 ```
