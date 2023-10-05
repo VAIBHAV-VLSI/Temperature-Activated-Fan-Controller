@@ -137,16 +137,17 @@ Disassembly of section .text:
 Number of different instructions: 10
 List of unique instructions:
 ```
-bne
-and
-ret
-mv
-li
-lw
-j
-or
-sw
 add
+sw
+auipc
+jalr
+j
+lw
+sll
+or
+and
+beqz
+
 ```
 
 
