@@ -5,7 +5,7 @@
 
 Temperature controlling is required in many places such as server rooms, houses, industries, etc. Here the Temperature controlled fan will act to the temperature changes.
   
-We are going to do this with a DHT11 temperature and humidity sensor as DHT11 is a efficient & cost-effective sensor.
+We are going to do this with a DHT11 temperature and humidity sensor as DHT11 is a efficient & cost-effective sensor.  
 
 Temperature-controlled fan will use RISCV. With this, we will be able to change the fan speed in our home or any place according to the room temperature. 
 
