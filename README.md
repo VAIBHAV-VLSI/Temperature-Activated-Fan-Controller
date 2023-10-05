@@ -7,7 +7,7 @@ Temperature controlling is required in many places such as server rooms, houses,
 
 We are going to do this with a DHT11 temperature and humidity sensor as DHT11 is a efficient & cost-effective sensor.
 
-Temperature-controlled fan will use RISCV. With this, we will be able to change the fan speed in our home or any place according to the room temperature and also display the temperature and fan speed changes on a 16x2 LCD display. 
+Temperature-controlled fan will use RISCV. With this, we will be able to change the fan speed in our home or any place according to the room temperature. 
 
 
 # Requirements 
@@ -19,7 +19,6 @@ RISCV
 Temperature Sensor(DHT11 sensor)
 DC Fan
 9 volt battery
-16x2 LCD
 Connecting wires
 ```
 
@@ -52,9 +51,6 @@ void readTemperature() {
 );
 
 
-    // Print temperature for testing
-    printf("Current Temperature: %d°C\n", temperature);
-
     controlFan(temperature);
 }
 
@@ -76,7 +72,7 @@ void controlFan(int temperature) {
     }
 
     asm (
-        "str %1, [%0]\n\t" // Store fan_reg value to FAN_CTRL register
+        " %1, [%0]\n\t" // Store fan_reg value to FAN_CTRL register
         :
         : "r"(FAN_CTRL), "r"(fan_reg)
     );
@@ -88,48 +84,55 @@ void controlFan(int temperature) {
 # Assembly Code
 
 ```
-
-Disassembly of section .text:
-temp_activated_fan_controller.o:     file format elf32-littleriscv
+input:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
 
 00000000 <main>:
-   0:	fe010113          	add	sp,sp,-32
-   4:	00812e23          	sw	s0,28(sp)
-   8:	02010413          	add	s0,sp,32
-   c:	1f400793          	li	a5,500
-  10:	fef42623          	sw	a5,-20(s0)
-  14:	001f7793          	and	a5,t5,1
-  18:	fef42423          	sw	a5,-24(s0)
-  1c:	fe842703          	lw	a4,-24(s0)
-  20:	00100793          	li	a5,1
-  24:	02f71063          	bne	a4,a5,44 <.L2>
-  28:	ffd00793          	li	a5,-3
-  2c:	fef42223          	sw	a5,-28(s0)
-  30:	fe042783          	lw	a5,-32(s0)
-  34:	00ff7f33          	and	t5,t5,a5
-  38:	002f6793          	or	a5,t5,2
-  3c:	fef42223          	sw	a5,-28(s0)
-  40:	01c0006f          	j	5c <.L3>
+   0:	ff010113          	add	sp,sp,-16
+   4:	00112623          	sw	ra,12(sp)
+   8:	00812423          	sw	s0,8(sp)
+   c:	01010413          	add	s0,sp,16
 
-00000044 <.L2>:
-  44:	ffd00793          	li	a5,-3
-  48:	fef42223          	sw	a5,-28(s0)
-  4c:	fe042783          	lw	a5,-32(s0)
-  50:	00ff7f33          	and	t5,t5,a5
-  54:	000f6793          	or	a5,t5,0
-  58:	fef42223          	sw	a5,-28(s0)
+00000010 <.L2>:
+  10:	00000097          	auipc	ra,0x0
+  14:	000080e7          	jalr	ra # 10 <.L2>
+  18:	ff9ff06f          	j	10 <.L2>
 
-0000005c <.L3>:
-  5c:	00000793          	li	a5,0
-  60:	00078513          	mv	a0,a5
-  64:	01c12403          	lw	s0,28(sp)
-  68:	02010113          	add	sp,sp,32
-  6c:	00008067          	ret
+0000001c <temp_monitor>:
+  1c:	fe010113          	add	sp,sp,-32
+  20:	00812e23          	sw	s0,28(sp)
+  24:	02010413          	add	s0,sp,32
+  28:	fe042623          	sw	zero,-20(s0)
+  2c:	fec42783          	lw	a5,-20(s0)
+  30:	00179793          	sll	a5,a5,0x1
+  34:	fef42423          	sw	a5,-24(s0)
+  38:	00ff6f33          	or	t5,t5,a5
+  3c:	fef42423          	sw	a5,-24(s0)
+  40:	001f7793          	and	a5,t5,1
+  44:	fef42223          	sw	a5,-28(s0)
 
+00000048 <.L6>:
+  48:	fe442783          	lw	a5,-28(s0)
+  4c:	02078263          	beqz	a5,70 <.L4>
+  50:	00100793          	li	a5,1
+  54:	fef42623          	sw	a5,-20(s0)
+  58:	fec42783          	lw	a5,-20(s0)
+  5c:	00179793          	sll	a5,a5,0x1
+  60:	fef42423          	sw	a5,-24(s0)
+  64:	00ff6f33          	or	t5,t5,a5
+  68:	fef42423          	sw	a5,-24(s0)
+  6c:	fddff06f          	j	48 <.L6>
 
+00000070 <.L4>:
+  70:	fe042623          	sw	zero,-20(s0)
+  74:	fec42783          	lw	a5,-20(s0)
+  78:	00179793          	sll	a5,a5,0x1
+  7c:	fef42423          	sw	a5,-24(s0)
+  80:	00ff6f33          	or	t5,t5,a5
+  84:	fef42423          	sw	a5,-24(s0)
+  88:	fc1ff06f          	j	48 <.L6>
 
 ```
 
