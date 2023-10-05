@@ -30,53 +30,51 @@ Connecting wires
 # Code
 
 ```
-#include <stdio.h>
 
-void readTemperature();
-void controlFan(int temperature);
+void temp_monitor();
 
 int main() {
     while (1) {
-        readTemperature();
+        temp_monitor();   //continuous running of hardware
     }
     return 0;
 }
 
-void readTemperature() {
-    int temperature;
+// Function to monitor temperature level and control the motor
+void temp_monitor() {
+ 
+    int temp_sensor;
+    int motor_out=0; 
+    int motor_buffer;
+    motor_buffer = motor_out*2;
+     asm(
+	"or x30, x30, %0\n\t" 
+	:"=r"(motor_buffer));
+    
+    asm(
+	"andi %0, x30, 1\n\t"
+	:"=r"(temp_sensor)); //getting the input from sensor
+    
 
-    asm (
-    "and %0, x30, 1" // Load temperature data into x30
-    : "=r"(temperature)
-);
-
-
-    controlFan(temperature);
-}
-
-// Function to control the fan based on the temperature
-void controlFan(int temperature) {
-
-    int* FAN_CTRL; 
-    int fan_reg;
-
-    // Threshold temperature for fan activation 
-    int thresholdTemperature = 30;
-
-    if (temperature > thresholdTemperature) {
-        // If temperature is above the threshold, set the fan control register to 1 (fan on)
-        fan_reg = 1;
-    } else {
-        // If temperature is below or equal to the threshold, set the fan control register to 0 (fan off)
-        fan_reg = 0;
+    while (1) {
+       
+        if (temp_sensor) {
+           
+            motor_out = 1;
+            motor_buffer = motor_out*2;
+            asm(
+		"or x30, x30, %0\n\t" 
+		:"=r"(motor_buffer));
+        } else {            
+            motor_out = 0;
+            motor_buffer = motor_out*2;
+            asm(
+		"or x30, x30, %0\n\t" 
+		:"=r"(motor_buffer));
+        }
     }
-
-    asm (
-        " %1, [%0]\n\t" // Store fan_reg value to FAN_CTRL register
-        :
-        : "r"(FAN_CTRL), "r"(fan_reg)
-    );
 }
+
 
 
 ```
