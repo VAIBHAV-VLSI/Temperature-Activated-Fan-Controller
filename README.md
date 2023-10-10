@@ -33,63 +33,59 @@ Connecting wires
 
 void temp_monitor();
 
+int temp_sensor; 
+int motor_out=0; 
+int motor_buffer;
 int main() {
+
+     motor_buffer = motor_out*2;
+     asm volatile(
+	"or x30, x30, %0\n\t" 
+	:
+	:"r"(motor_buffer)
+	:"x30"
+	);
+
     while (1) {
-        temp_monitor();   //continuous running of hardware
+        temp_monitor();
     }
     return 0;
 }
 
-// Function to monitor temperature level and control the motor
-void temp_monitor() {
- 
-    int temp_sensor;
-    int motor_out=0; 
-    int motor_buffer;
-    motor_buffer = motor_out*2;
-     asm(
-	"or x30, x30, %0\n\t"
-	:
-	:"=r"(motor_buffer)
-	:"x30"
-	
-);
-    
-    asm(
-	"andi %0, x30, 1\n\t"
-	:"=r"(temp_sensor)//getting the input from sensor
-	:
-	:
-	
-    ); 
+// Function to sense the temprature and control the fan motor.
 
-    while (1) {
-       
+
+
+void temp_monitor()  {
+ 
+    asm volatile(
+	"andi %0, x30, 1\n\t"
+	:"=r"(temp_sensor)
+	:
+	:
+	);
+
         if (temp_sensor) {
-           
             motor_out = 1;
             motor_buffer = motor_out*2;
-            asm(
-		"or x30, x30, %0\n\t"
+            asm volatile(
+		"or x30, x30, %0\n\t" 
 		:
-		:"=r"(motor_buffer)
+		:"r"(motor_buffer)
 		:"x30"
-);
-	
-        } else {            
+		);
+        } else {
             motor_out = 0;
             motor_buffer = motor_out*2;
-            asm(
-		"or x30, x30, %0\n\t"
+            asm volatile(
+		"or x30, x30, %0\n\t" 
 		:
-		:"=r"(motor_buffer)
+		:"r"(motor_buffer)
 		:"x30"
-);
-		
+		);
         }
     }
-}
-
+	
 
 
 ```
@@ -97,9 +93,6 @@ void temp_monitor() {
 # Assembly Code
 
 ```
-input:     file format elf32-littleriscv
-
-
 Disassembly of section .text:
 
 00000000 <main>:
@@ -107,62 +100,83 @@ Disassembly of section .text:
    4:	00112623          	sw	ra,12(sp)
    8:	00812423          	sw	s0,8(sp)
    c:	01010413          	add	s0,sp,16
+  10:	000007b7          	lui	a5,0x0
+  14:	0007a783          	lw	a5,0(a5) # 0 <main>
+  18:	00179713          	sll	a4,a5,0x1
+  1c:	000007b7          	lui	a5,0x0
+  20:	00e7a023          	sw	a4,0(a5) # 0 <main>
+  24:	000007b7          	lui	a5,0x0
+  28:	0007a783          	lw	a5,0(a5) # 0 <main>
+  2c:	00ff6f33          	or	t5,t5,a5
 
-00000010 <.L2>:
-  10:	00000097          	auipc	ra,0x0
-  14:	000080e7          	jalr	ra # 10 <.L2>
-  18:	ff9ff06f          	j	10 <.L2>
+00000030 <.L2>:
+  30:	00000097          	auipc	ra,0x0
+  34:	000080e7          	jalr	ra # 30 <.L2>
+  38:	ff9ff06f          	j	30 <.L2>
 
-0000001c <temp_monitor>:
-  1c:	fe010113          	add	sp,sp,-32
-  20:	00812e23          	sw	s0,28(sp)
-  24:	02010413          	add	s0,sp,32
-  28:	fe042623          	sw	zero,-20(s0)
-  2c:	fec42783          	lw	a5,-20(s0)
-  30:	00179793          	sll	a5,a5,0x1
-  34:	fef42423          	sw	a5,-24(s0)
-  38:	00ff6f33          	or	t5,t5,a5
-  3c:	fef42423          	sw	a5,-24(s0)
-  40:	001f7793          	and	a5,t5,1
-  44:	fef42223          	sw	a5,-28(s0)
+0000003c <temp_monitor>:
+  3c:	ff010113          	add	sp,sp,-16
+  40:	00812623          	sw	s0,12(sp)
+  44:	01010413          	add	s0,sp,16
+  48:	001f7713          	and	a4,t5,1
+  4c:	000007b7          	lui	a5,0x0
+  50:	00e7a023          	sw	a4,0(a5) # 0 <main>
+  54:	000007b7          	lui	a5,0x0
+  58:	0007a783          	lw	a5,0(a5) # 0 <main>
+  5c:	02078a63          	beqz	a5,90 <.L4>
+  60:	000007b7          	lui	a5,0x0
+  64:	00100713          	li	a4,1
+  68:	00e7a023          	sw	a4,0(a5) # 0 <main>
+  6c:	000007b7          	lui	a5,0x0
+  70:	0007a783          	lw	a5,0(a5) # 0 <main>
+  74:	00179713          	sll	a4,a5,0x1
+  78:	000007b7          	lui	a5,0x0
+  7c:	00e7a023          	sw	a4,0(a5) # 0 <main>
+  80:	000007b7          	lui	a5,0x0
+  84:	0007a783          	lw	a5,0(a5) # 0 <main>
+  88:	00ff6f33          	or	t5,t5,a5
+  8c:	02c0006f          	j	b8 <.L6>
 
-00000048 <.L6>:
-  48:	fe442783          	lw	a5,-28(s0)
-  4c:	02078263          	beqz	a5,70 <.L4>
-  50:	00100793          	li	a5,1
-  54:	fef42623          	sw	a5,-20(s0)
-  58:	fec42783          	lw	a5,-20(s0)
-  5c:	00179793          	sll	a5,a5,0x1
-  60:	fef42423          	sw	a5,-24(s0)
-  64:	00ff6f33          	or	t5,t5,a5
-  68:	fef42423          	sw	a5,-24(s0)
-  6c:	fddff06f          	j	48 <.L6>
+00000090 <.L4>:
+  90:	000007b7          	lui	a5,0x0
+  94:	0007a023          	sw	zero,0(a5) # 0 <main>
+  98:	000007b7          	lui	a5,0x0
+  9c:	0007a783          	lw	a5,0(a5) # 0 <main>
+  a0:	00179713          	sll	a4,a5,0x1
+  a4:	000007b7          	lui	a5,0x0
+  a8:	00e7a023          	sw	a4,0(a5) # 0 <main>
+  ac:	000007b7          	lui	a5,0x0
+  b0:	0007a783          	lw	a5,0(a5) # 0 <main>
+  b4:	00ff6f33          	or	t5,t5,a5
 
-00000070 <.L4>:
-  70:	fe042623          	sw	zero,-20(s0)
-  74:	fec42783          	lw	a5,-20(s0)
-  78:	00179793          	sll	a5,a5,0x1
-  7c:	fef42423          	sw	a5,-24(s0)
-  80:	00ff6f33          	or	t5,t5,a5
-  84:	fef42423          	sw	a5,-24(s0)
-  88:	fc1ff06f          	j	48 <.L6>
+000000b8 <.L6>:
+  b8:	00000013          	nop
+  bc:	00c12403          	lw	s0,12(sp)
+  c0:	01010113          	add	sp,sp,16
+  c4:	00008067          	ret
+
+
 
 ```
 
 
 ```
-Number of different instructions: 10
+Number of different instructions: 14
 List of unique instructions:
-add
+ret
+jalr
+li
+nop
+lw
 sw
 auipc
-jalr
-j
-lw
 sll
 or
-and
+j
 beqz
+and
+lui
+add
 
 ```
 
