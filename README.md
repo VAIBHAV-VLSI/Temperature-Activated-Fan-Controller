@@ -149,9 +149,10 @@ Disassembly of section .text:
 
 ```
 
+
+```
 Number of different instructions: 10
 List of unique instructions:
-```
 add
 sw
 auipc
