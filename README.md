@@ -48,13 +48,20 @@ void temp_monitor() {
     int motor_buffer;
     motor_buffer = motor_out*2;
      asm(
-	"or x30, x30, %0\n\t" 
-	:"=r"(motor_buffer));
+	"or x30, x30, %0\n\t"
+	:
+	:"=r"(motor_buffer)
+	:"x30"
+	
+);
     
     asm(
 	"andi %0, x30, 1\n\t"
-	:"=r"(temp_sensor)); //getting the input from sensor
-    
+	:"=r"(temp_sensor)//getting the input from sensor
+	:
+	:
+	
+    ); 
 
     while (1) {
        
@@ -63,14 +70,22 @@ void temp_monitor() {
             motor_out = 1;
             motor_buffer = motor_out*2;
             asm(
-		"or x30, x30, %0\n\t" 
-		:"=r"(motor_buffer));
+		"or x30, x30, %0\n\t"
+		:
+		:"=r"(motor_buffer)
+		:"x30"
+);
+	
         } else {            
             motor_out = 0;
             motor_buffer = motor_out*2;
             asm(
-		"or x30, x30, %0\n\t" 
-		:"=r"(motor_buffer));
+		"or x30, x30, %0\n\t"
+		:
+		:"=r"(motor_buffer)
+		:"x30"
+);
+		
         }
     }
 }
