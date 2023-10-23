@@ -31,14 +31,14 @@ Connecting wires
 
 ```
 
-void temp_monitor();
-
-int temp_sensor; 
-int motor_out=0; 
-int motor_buffer;
 int main() {
 
+    int temp_sensor; 
+    int motor_out=0; 
+    int motor_buffer;
+
      motor_buffer = motor_out*2;
+
      asm volatile(
 	"or x30, x30, %0\n\t" 
 	:
@@ -47,18 +47,7 @@ int main() {
 	);
 
     while (1) {
-        temp_monitor();
-    }
-    return 0;
-}
-
-// Function to sense the temprature and control the fan motor.
-
-
-
-void temp_monitor()  {
- 
-    asm volatile(
+         asm volatile(
 	"andi %0, x30, 1\n\t"
 	:"=r"(temp_sensor)
 	:
@@ -85,88 +74,67 @@ void temp_monitor()  {
 		);
         }
     }
+    return 0;
+}
+
 	
-
-
 ```
 
 # Assembly Code
 
 ```
 
-vaibhav.o:     file format elf32-littleriscv
+out:     file format elf32-littleriscv
 
 
 Disassembly of section .text:
 
-00010094 <main>:
-   10094:	ff010113          	add	sp,sp,-16
-   10098:	00112623          	sw	ra,12(sp)
-   1009c:	00812423          	sw	s0,8(sp)
-   100a0:	01010413          	add	s0,sp,16
-   100a4:	000117b7          	lui	a5,0x11
-   100a8:	1447a783          	lw	a5,324(a5) # 11144 <motor_out>
-   100ac:	00179713          	sll	a4,a5,0x1
-   100b0:	80e1a423          	sw	a4,-2040(gp) # 11148 <motor_buffer>
-   100b4:	8081a783          	lw	a5,-2040(gp) # 11148 <motor_buffer>
-   100b8:	00ff6f33          	or	t5,t5,a5
-   100bc:	008000ef          	jal	100c4 <temp_monitor>
-   100c0:	ffdff06f          	j	100bc <main+0x28>
-
-000100c4 <temp_monitor>:
-   100c4:	ff010113          	add	sp,sp,-16
-   100c8:	00812623          	sw	s0,12(sp)
-   100cc:	01010413          	add	s0,sp,16
-   100d0:	001f7713          	and	a4,t5,1
-   100d4:	000117b7          	lui	a5,0x11
-   100d8:	14e7a023          	sw	a4,320(a5) # 11140 <__DATA_BEGIN__>
-   100dc:	000117b7          	lui	a5,0x11
-   100e0:	1407a783          	lw	a5,320(a5) # 11140 <__DATA_BEGIN__>
-   100e4:	02078663          	beqz	a5,10110 <temp_monitor+0x4c>
-   100e8:	000117b7          	lui	a5,0x11
-   100ec:	00100713          	li	a4,1
-   100f0:	14e7a223          	sw	a4,324(a5) # 11144 <motor_out>
-   100f4:	000117b7          	lui	a5,0x11
-   100f8:	1447a783          	lw	a5,324(a5) # 11144 <motor_out>
-   100fc:	00179713          	sll	a4,a5,0x1
-   10100:	80e1a423          	sw	a4,-2040(gp) # 11148 <motor_buffer>
-   10104:	8081a783          	lw	a5,-2040(gp) # 11148 <motor_buffer>
-   10108:	00ff6f33          	or	t5,t5,a5
-   1010c:	0240006f          	j	10130 <temp_monitor+0x6c>
-   10110:	000117b7          	lui	a5,0x11
-   10114:	1407a223          	sw	zero,324(a5) # 11144 <motor_out>
-   10118:	000117b7          	lui	a5,0x11
-   1011c:	1447a783          	lw	a5,324(a5) # 11144 <motor_out>
-   10120:	00179713          	sll	a4,a5,0x1
-   10124:	80e1a423          	sw	a4,-2040(gp) # 11148 <motor_buffer>
-   10128:	8081a783          	lw	a5,-2040(gp) # 11148 <motor_buffer>
-   1012c:	00ff6f33          	or	t5,t5,a5
-   10130:	00000013          	nop
-   10134:	00c12403          	lw	s0,12(sp)
-   10138:	01010113          	add	sp,sp,16
-   1013c:	00008067          	ret
-
+00010054 <main>:
+   10054:	fe010113          	addi	sp,sp,-32
+   10058:	00812e23          	sw	s0,28(sp)
+   1005c:	02010413          	addi	s0,sp,32
+   10060:	fe042623          	sw	zero,-20(s0)
+   10064:	fec42783          	lw	a5,-20(s0)
+   10068:	00179793          	slli	a5,a5,0x1
+   1006c:	fef42423          	sw	a5,-24(s0)
+   10070:	fe842783          	lw	a5,-24(s0)
+   10074:	00ff6f33          	or	t5,t5,a5
+   10078:	001f7793          	andi	a5,t5,1
+   1007c:	fef42223          	sw	a5,-28(s0)
+   10080:	fe442783          	lw	a5,-28(s0)
+   10084:	02078263          	beqz	a5,100a8 <main+0x54>
+   10088:	00100793          	li	a5,1
+   1008c:	fef42623          	sw	a5,-20(s0)
+   10090:	fec42783          	lw	a5,-20(s0)
+   10094:	00179793          	slli	a5,a5,0x1
+   10098:	fef42423          	sw	a5,-24(s0)
+   1009c:	fe842783          	lw	a5,-24(s0)
+   100a0:	00ff6f33          	or	t5,t5,a5
+   100a4:	fd5ff06f          	j	10078 <main+0x24>
+   100a8:	fe042623          	sw	zero,-20(s0)
+   100ac:	fec42783          	lw	a5,-20(s0)
+   100b0:	00179793          	slli	a5,a5,0x1
+   100b4:	fef42423          	sw	a5,-24(s0)
+   100b8:	fe842783          	lw	a5,-24(s0)
+   100bc:	00ff6f33          	or	t5,t5,a5
+   100c0:	fb9ff06f          	j	10078 <main+0x24>
 
 
 ```
 
 
 ```
-Number of different instructions: 13
+Number of different instructions: 9
 List of unique instructions:
-jal
-sll
-j
-ret
+addi
+andi
 sw
-li
-lui
-beqz
-nop
-add
 lw
+slli
 or
-and
+j
+beqz
+li
 ```
 
 
