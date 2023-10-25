@@ -31,50 +31,97 @@ Connecting wires
 
 ```
 
-int main() {
+#include<stdio.h>
 
-    int temp_sensor; 
-    int motor_out=0; 
-    int motor_buffer;
+int main()
+{
+int i,j;
+int motor_buffer,Result1,mask;
+int temp_sensor,motor_out;
 
-     motor_buffer = motor_out*2;
 
-     asm volatile(
-	"or x30, x30, %0\n\t" 
-	:
-	:"r"(motor_buffer)
-	:"x30"
-	);
 
-    while (1) {
-         asm volatile(
-	"andi %0, x30, 1\n\t"
-	:"=r"(temp_sensor)
-	:
-	:
-	);
+//for (int j=0; j<15;j++) 
 
-        if (temp_sensor) {
-            motor_out = 1;
-            motor_buffer = motor_out*2;
-            asm volatile(
-		"or x30, x30, %0\n\t" 
-		:
-		:"r"(motor_buffer)
-		:"x30"
+while (1)
+{
+
+/*if(j < 7)
+		 motor_buffer = 1;
+	else
+		 motor_buffer =0;
+			
+*/
+
+			
+//  asm code to read sensor value
+
+	asm volatile(
+		"or x30, x30, %1\n\t"
+		"andi %0, x30, 0x01\n\t"
+		: "=r" (temp_sensor)                             // input
+		: "r"  (motor_buffer)                        // storing input
+		: "x30"
 		);
-        } else {
-            motor_out = 0;
-            motor_buffer = motor_out*2;
+
+
+
+//if condition logic
+if  (motor_buffer)
+	{
+	mask=0xFFFFFFFD;
+	
+	  //printf(" \n");
+	
+	motor_out=1;
+	
+	asm volatile(
+            "and x30,x30, %0\n\t"     
+            "ori x30, x30,2"               
+            :
+            :"r"(mask)
+            :"x30"
+            );
+            
             asm volatile(
-		"or x30, x30, %0\n\t" 
-		:
-		:"r"(motor_buffer)
-		:"x30"
-		);
-        }
-    }
-    return 0;
+	    	"addi %0, x30, 0\n\t"
+	    	:"=r"(Result1)
+	    	:
+	    	:"x30"
+	    	);
+    	  //printf("Result1 = %d\n",Result1);
+    	
+	
+
+	}
+else
+	{
+	
+	mask=0xFFFFFFFD;
+	
+	motor_out=0;
+	
+	
+	asm volatile( 
+            "and x30,x30, %0\n\t"     
+            "ori x30, x30,0"            
+            :
+            :"r"(mask)
+            :"x30"
+        );
+        asm volatile(
+	    	"addi %0, x30, 0\n\t"
+	    	:"=r"(Result1)
+	    	:
+	    	:"x30"
+	    	);
+	   //printf("Result1 = %d\n",Result1);
+
+	}
+      //printf("motor_out=%d \n", motor_buffer); 
+}
+
+return 0;
 }
 
 	
@@ -90,35 +137,34 @@ out:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00010054 <main>:
-   10054:	fe010113          	addi	sp,sp,-32
-   10058:	00812e23          	sw	s0,28(sp)
-   1005c:	02010413          	addi	s0,sp,32
-   10060:	fe042623          	sw	zero,-20(s0)
-   10064:	fec42783          	lw	a5,-20(s0)
-   10068:	00179793          	slli	a5,a5,0x1
+   10054:	fd010113          	addi	sp,sp,-48
+   10058:	02812623          	sw	s0,44(sp)
+   1005c:	03010413          	addi	s0,sp,48
+   10060:	fec42783          	lw	a5,-20(s0)
+   10064:	00ff6f33          	or	t5,t5,a5
+   10068:	001f7793          	andi	a5,t5,1
    1006c:	fef42423          	sw	a5,-24(s0)
-   10070:	fe842783          	lw	a5,-24(s0)
-   10074:	00ff6f33          	or	t5,t5,a5
-   10078:	001f7793          	andi	a5,t5,1
+   10070:	fec42783          	lw	a5,-20(s0)
+   10074:	02078663          	beqz	a5,100a0 <main+0x4c>
+   10078:	ffd00793          	li	a5,-3
    1007c:	fef42223          	sw	a5,-28(s0)
-   10080:	fe442783          	lw	a5,-28(s0)
-   10084:	02078263          	beqz	a5,100a8 <main+0x54>
-   10088:	00100793          	li	a5,1
-   1008c:	fef42623          	sw	a5,-20(s0)
-   10090:	fec42783          	lw	a5,-20(s0)
-   10094:	00179793          	slli	a5,a5,0x1
-   10098:	fef42423          	sw	a5,-24(s0)
-   1009c:	fe842783          	lw	a5,-24(s0)
-   100a0:	00ff6f33          	or	t5,t5,a5
-   100a4:	fd5ff06f          	j	10078 <main+0x24>
-   100a8:	fe042623          	sw	zero,-20(s0)
-   100ac:	fec42783          	lw	a5,-20(s0)
-   100b0:	00179793          	slli	a5,a5,0x1
-   100b4:	fef42423          	sw	a5,-24(s0)
-   100b8:	fe842783          	lw	a5,-24(s0)
-   100bc:	00ff6f33          	or	t5,t5,a5
-   100c0:	fb9ff06f          	j	10078 <main+0x24>
-
+   10080:	00100793          	li	a5,1
+   10084:	fef42023          	sw	a5,-32(s0)
+   10088:	fe442783          	lw	a5,-28(s0)
+   1008c:	00ff7f33          	and	t5,t5,a5
+   10090:	002f6f13          	ori	t5,t5,2
+   10094:	000f0793          	mv	a5,t5
+   10098:	fcf42e23          	sw	a5,-36(s0)
+   1009c:	fc5ff06f          	j	10060 <main+0xc>
+   100a0:	ffd00793          	li	a5,-3
+   100a4:	fef42223          	sw	a5,-28(s0)
+   100a8:	fe042023          	sw	zero,-32(s0)
+   100ac:	fe442783          	lw	a5,-28(s0)
+   100b0:	00ff7f33          	and	t5,t5,a5
+   100b4:	000f6f13          	ori	t5,t5,0
+   100b8:	000f0793          	mv	a5,t5
+   100bc:	fcf42e23          	sw	a5,-36(s0)
+   100c0:	fa1ff06f          	j	10060 <main+0xc>
 
 ```
 
@@ -136,6 +182,16 @@ j
 beqz
 li
 ```
+
+## The simulation commands and outputs are as follows:
+
+```bash
+riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -o out file.c
+spike pk out
+```
+
+## Spike Output:
+https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/issues/2#issue-1961464410
   
 
 
