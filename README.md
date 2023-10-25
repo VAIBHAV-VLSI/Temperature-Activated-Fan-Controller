@@ -191,7 +191,7 @@ spike pk out
 ```
 
 ## Spike Output:
-https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/issues/2#issue-1961464410
+![Screenshot from 2023-10-25 18-51-28](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/a9ad7484-5021-4e24-8a3c-4aa1d778a715)
   
 
 
