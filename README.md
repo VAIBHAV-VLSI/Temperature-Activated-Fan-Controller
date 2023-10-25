@@ -170,13 +170,15 @@ Disassembly of section .text:
 
 
 ```
-Number of different instructions: 9
+Number of different instructions: 11
 List of unique instructions:
 addi
 andi
 sw
 lw
-slli
+and
+ori
+mv
 or
 j
 beqz
