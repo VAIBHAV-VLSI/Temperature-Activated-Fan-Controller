@@ -225,7 +225,7 @@ iverilog -o test synth_processor_test.v testbench.v sky130_sram_1kbyte_1rw1r_32x
 
 <b>Highlighted the wrapper module after netlist created</b>
 <div>
-	![279657327-0c075205-0bcb-473a-a3cb-e173381875f9](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/d24620c0-da39-4173-9920-e58d08b31694)
+	<img width="684" alt="Screenshot 2023-11-02 at 9 50 59 PM" src="https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/4185c69f-fc86-428b-8532-aa117b740a87">
 </div>
 
 <b>GLS SImulation results</b>
@@ -235,7 +235,7 @@ iverilog -o test synth_processor_test.v testbench.v sky130_sram_1kbyte_1rw1r_32x
 </div>
 
 <div>
-	![s2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/52cae09d-75d6-4211-9c9e-2563de32aa1a)
+		<img width="1469" alt="Screenshot 2023-11-02 at 9 51 28 PM" src="https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/c8ca2a17-af58-4496-ae6f-c19836fc3d7d">
 
 </div>
 
