@@ -199,6 +199,49 @@ spike pk out
 ![1](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/67b6725c-b6d1-46b4-9f7b-1e832e17b9ff)
 ![2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/661a67de-b046-4237-b4c5-0c6b4446284e)
 
+## GLS
+
+GLS typically stands for "Gate Level Simulation." It is a method used in digital design and verification to simulate the behavior of the synthesized netlist or gate-level representation of a design. This simulation verifies that the logical functionality of the gate-level design matches the intended behavior described in the RTL (Register Transfer Level) design.
+Below are the commands used for Netlist generation(Logic Synthesis)
+
+```
+read_liberty -lib sky130_fd_sc_hd__tt_025C_1v80_256.lib 
+read_verilog processor.v 
+synth -top wrapper
+dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80_256.lib 
+abc -liberty sky130_fd_sc_hd__tt_025C_1v80_256.lib
+write_verilog synth_processor_test.v
+
+```
+
+command to run gls simulation
+
+```
+
+iverilog -o test synth_processor_test.v testbench.v sky130_sram_1kbyte_1rw1r_32x256_8.v sky130_fd_sc_hd.v primitives.v
+
+```
+
+
+<b>Highlighted the wrapper module after netlist created</b>
+<div>
+	![279657327-0c075205-0bcb-473a-a3cb-e173381875f9](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/d24620c0-da39-4173-9920-e58d08b31694)
+</div>
+
+<b>GLS SImulation results</b>
+<div>
+	<img width="1469" alt="Screenshot 2023-11-02 at 9 30 06 PM" src="https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/240f0b95-d2bd-40e3-a446-8749d1d771ad">
+
+</div>
+
+<div>
+	![s2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/52cae09d-75d6-4211-9c9e-2563de32aa1a)
+
+</div>
+
+
+
+
 
 ## References
 
