@@ -200,9 +200,17 @@ spike pk out
 ![2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/661a67de-b046-4237-b4c5-0c6b4446284e)
 
 
-## Reference
-* https://github.com/kunalg123
-* https://www.vsdiat.com
+## References
 
+* https://github.com/SakethGajawada/RISCV_GNU
+* https://circuitdigest.com/microcontroller-projects/interfacing-ir-sensor-module-with-arduino
+* https://chat.openai.com/
+
+## Acknowledgement
+
+* Kunal Ghosh, VSD Corp. Pvt. Ltd.
+* Mayank Kabra, Founder Chipcron Pvt.Ltd    
+* Nitesh Sharma, IIITB
+  
 
 
