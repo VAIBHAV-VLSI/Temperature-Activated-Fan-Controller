@@ -253,7 +253,8 @@ iverilog -o test synth_processor_test.v testbench.v sky130_sram_1kbyte_1rw1r_32x
 
 * Kunal Ghosh, VSD Corp. Pvt. Ltd.
 * Mayank Kabra, Founder Chipcron Pvt.Ltd    
-* Nitesh Sharma, IIITB
+* Dinesh,MTech, IIITB.
+* Amit Bharadhwaj, MTech, IIITB.
   
 
 
