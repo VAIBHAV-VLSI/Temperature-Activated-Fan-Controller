@@ -422,18 +422,22 @@ run_cts
 ```
 ### Timing reports
 <div align="center">
+	
 ![c-3](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/06af3c7e-92d5-4195-94c2-061375a8aeb3)
-
 </div>
 
 ### Area Report
 <div align="center">
-![c-4](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/0c749a41-c7f2-40e0-a688-6a0292307cc6)
+
+	
+ ![c-4](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/0c749a41-c7f2-40e0-a688-6a0292307cc6)
 </div>
 
 ### Power Report
 <div align="center">
-![c-5](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/76da6ccf-af23-4397-8130-030c36aed540)
+
+	
+ ![c-5](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/76da6ccf-af23-4397-8130-030c36aed540)
 
 </div>
 
@@ -479,7 +483,9 @@ To run the routing process, use the following command:
 
 ### Post Routing Timing report
 <div align="center">
-![c-8](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/f0c3f6a1-6ecc-4453-9efa-bc756b86bbdb)
+
+	
+ ![c-8](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/f0c3f6a1-6ecc-4453-9efa-bc756b86bbdb)
 </div>
 
 
@@ -492,7 +498,9 @@ To run the routing process, use the following command:
 
 ### Post Routing Power report
 <div align="center">
-![c-10](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/00c9bfed-f85e-4a40-9055-bf51b86fc96e)
+
+	
+ ![c-10](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/00c9bfed-f85e-4a40-9055-bf51b86fc96e)
 </div>
 
 
@@ -528,25 +536,6 @@ run_antenna_check
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## References
-
-* https://github.com/SakethGajawada/RISCV_GNU
-* https://circuitdigest.com/microcontroller-projects/interfacing-ir-sensor-module-with-arduino
-* https://chat.openai.com/
 
 ## Acknowledgement
 
