@@ -394,8 +394,8 @@ run_placement
   ```
 
   <div align="center">
-	![c-2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/dce36faf-b9c8-4b49-91a7-d71d734854d4)
-
+	![c-2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/227f47df-954e-43f1-8519-624e0e88d5c2)
+ 
 </div>
 
 ## Clock Tree Synthesis (CTS) in OpenLANE
