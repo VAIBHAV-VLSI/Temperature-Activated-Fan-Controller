@@ -394,7 +394,8 @@ run_placement
   ```
 
   <div align="center">
-	![c-2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/227f47df-954e-43f1-8519-624e0e88d5c2)
+![c-2](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/4487b8f9-9bc2-4d95-bbfb-3555dcea7f57)
+
  
 </div>
 
@@ -421,17 +422,19 @@ run_cts
 ```
 ### Timing reports
 <div align="center">
-![c-3](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/b09bbaae-b4b4-44ce-89e8-86443eb0b982)
+![c-3](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/06af3c7e-92d5-4195-94c2-061375a8aeb3)
+
 </div>
 
 ### Area Report
 <div align="center">
-![c-4](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/42632986-505c-42e1-85ec-543d4efeab22)
+![c-4](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/0c749a41-c7f2-40e0-a688-6a0292307cc6)
 </div>
 
 ### Power Report
 <div align="center">
-![c-5](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/838c1601-57a3-49e3-b48b-61a290a38ce7)
+![c-5](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/76da6ccf-af23-4397-8130-030c36aed540)
+
 </div>
 
 ## Routing in OpenLANE
