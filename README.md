@@ -492,7 +492,9 @@ To run the routing process, use the following command:
 
 ### Post Routing Area report
 <div align="center">
-![c-9](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/68cc0a8c-aeb8-4f65-8a3f-faf3639bdb1d)
+
+	
+ ![c-9](https://github.com/VAIBHAV-VLSI/Temperature-Activated-Fan-Controller/assets/140998525/68cc0a8c-aeb8-4f65-8a3f-faf3639bdb1d)
 </div>
 
 
